@@ -10,7 +10,7 @@ def main():
     x = jacobi(a, b)
     print(x)
 
-def jacobi(a, b, N=100, pr_x=3, pr_y=2, pr_t=16):
+def jacobi(a, b, N=100, pr_x=3, pr_y=2, pr_t=16, chatty=True):
 
     n = np.shape(b)[0]
 
@@ -31,10 +31,11 @@ def jacobi(a, b, N=100, pr_x=3, pr_y=2, pr_t=16):
         w = x
         k = k+1
         x = f(x)
-        #print(f"x_{k}: {np.array2string(x, precision=pr_x)}")
+        if(chatty):
+            print(f"x_{k}: {np.array2string(x, precision=pr_x)}")
 
-
-    #print(f"Lösung: x = {np.array2string(x, precision=pr_x)}")
+    if(chatty):
+        print(f"Lösung: x = {np.array2string(x, precision=pr_x)}")
     return x
 
 if __name__ == "__main__":

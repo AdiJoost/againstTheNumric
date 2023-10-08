@@ -10,7 +10,7 @@ def main():
     x = richardson(a,b, s=0.1)
     print(x)
 
-def richardson(a, b, s=0.22, N=100):
+def richardson(a, b, s=0.22, N=100, pr_x=3, chatty=True):
     n = np.shape(b)[0]
 
     h = s*np.eye(n)
@@ -28,7 +28,11 @@ def richardson(a, b, s=0.22, N=100):
         w = x
         k = k + 1
         x = f(x)
-        #print(f"x_{k} = {x}")
+        if(chatty):
+            print(f"x_{k} = {x}")
+
+    if(chatty):
+        print(f"Lösung: x = {np.array2string(x, precision=pr_x)}")
     return x
 
 if __name__ == "__main__":
