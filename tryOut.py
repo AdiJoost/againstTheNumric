@@ -1,10 +1,10 @@
 import numpy as np
 import scipy as cp
 import scipy.linalg
-from utils.gauss import gaussLgls
-from utils.jacobi import jacobi
-from utils.richardson import richardson
-from utils.auerneumann import auerNeumann
+from ATNutils.gauss import gaussLgls
+from ATNutils.jacobi import jacobi
+from ATNutils.richardson import richardson
+from ATNutils.auerneumann import auerNeumann
 
 def main():
     A = np.array([
