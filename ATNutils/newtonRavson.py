@@ -2,30 +2,37 @@ import numpy as np
 
 
 def main():
-    print(newtonRaphson(testF, testFDx, itterations=200000000, chatty=True, startValue=0.56))
+    print(newtonRaphson(testF, testFDx, startValues=(-10,-5,0, 5, 10), itterations=1000000, chatty=False, tol=0))
 
-def newtonRaphson(f, fDx, startValue=1, tol=10**-16, itterations=100, chatty=True):
-    x = startValue
-    for i in range(itterations):
-        f_x = f(x)
-        fDx_x = fDx(x)
-        if fDx_x == 0:
-            print("Failed due to fDx = 0")
-            return
-        xNext = x - f_x/fDx_x
+def newtonRaphson(f, fDx, startValues=(1), tol=10**-16, itterations=100, chatty=True):
+    returnValues = []
+    for startValue in startValues:
+        x = startValue
+        for i in range(itterations):
+            f_x = f(x)
+            fDx_x = fDx(x)
+            if fDx_x == 0:
+                print(f"\n StartValue {startValue} Failed due to fDx = 0")
+                break
+            xNext = x - f_x/fDx_x
 
-        if chatty:
-            _printItteration(x, f_x, fDx_x, xNext, i)
+            if chatty:
+                _printItteration(x, f_x, fDx_x, xNext, i)
 
-        if(np.abs(x - xNext) < tol):
-            return x
+            if(np.abs(x - xNext) < tol):
+                returnValues.append(x)
+                break
 
-        x = xNext
-    return x
+            x = xNext
+
+            if(i == itterations - 1):
+                returnValues.append(x)
+    
+    return set(returnValues)
         
 
 
-def _printItteration(x, f_x, fDx_x, xNext, i):
+def _printItteration(x, f_x, fDx_x, xNext, i): 
     print(f"------ Itteration {i} ------")
     print(f"--- x{i} ---\n{x}")
     print(f"--- f_x{i} ---\n{f_x}")
@@ -33,10 +40,10 @@ def _printItteration(x, f_x, fDx_x, xNext, i):
     print(f"Error: {xNext- x}")
 
 def testF(x):
-    return np.exp(-x) - x
+    return x**3 - x**2 - x + 1
 
 def testFDx(x):
-    return -np.exp(-x) - 1
+    return 3*x**2 -2*x - 1
 
 if __name__ == "__main__":
     main()
