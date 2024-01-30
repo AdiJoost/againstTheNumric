@@ -16,6 +16,7 @@ def main():
     qrAlgorithmus(A, chatty=True, shift="Willkinson", tol=0.003)
 
 def qrAlgorithmus(A, itterations=100, tol=10**-16, shift=None, chatty=False):
+    """Finds Eigenvalues and Eigenvectors of A"""
     Ak = A.copy()
     Ek = np.eye(A.shape[0])
 
