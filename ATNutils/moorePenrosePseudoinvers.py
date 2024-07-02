@@ -1,21 +1,25 @@
 import numpy as np
 import scipy as cp
 import scipy.linalg
-from hilbermatrix import getHilbertMatrix
 
 def main():
+    from hilbermatrix import getHilbertMatrix
     A, B = getHilbertMatrix(100)
     print(mPPI(A,B))
-    print(betterMppI(A,B))
+    print(moorePenrosePseudoInverse(A,B))
 
-def mPPI(A, B, tuner = 0.1):
+def mPPI(A, B, tuner = 0):
     S = np.zeros(A.shape)
     [U, SDiag, Vt] = cp.linalg.svd(A)
     np.fill_diagonal(S, SDiag)
-    x = Vt.T@np.linalg.inv(S)@U.T@B
+    SInverse = np.linalg.inv(S)
+    if(tuner != 0):
+        SInverse[SInverse > 1 / tuner] = 0
+    #x = V * S**-1 * Ut * b
+    x = Vt.T @ SInverse @ U.T @ B
     return x
 
-def betterMppI(A, B, tuner=0.1):
+def moorePenrosePseudoInverse(A, B, tuner=0.1):
     Ap = cp.linalg.pinv(A, tuner)
     x = Ap@B
     return x
